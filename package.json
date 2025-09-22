@@ -1,6 +1,6 @@
 {
   "name": "@mbertogliati/docsify-api-block",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A lightweight Docsify plugin to render API request/response blocks from HTML comments in Markdown.",
   "main": "dist/api-block.js",
   "style": "dist/api-block.css",
