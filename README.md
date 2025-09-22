@@ -55,20 +55,20 @@ Supported attributes on `api:start`:
 - `path`: The endpoint path. You can obfuscate or redact this as needed.
 - `expanded` or `open`: Set to `"true"` to have the block open by default.
 
-Example (obfuscated):
+Example (realistic endpoint, data anonymized):
 
 ```markdown
-<!-- api:start method="POST" path="/redacted/********" -->
+<!-- api:start method="POST" path="/api/v1/orders/bulk/read" -->
 
-> Important: Only up to N items can be read at once.
+> Important: Only up to 100 orders can be read at once.
 
 ```json
 [
-  "**********",
-  "**********",
-  "**********",
-  "**********",
-  "**********"
+  1000000000000001,
+  1000000000000002,
+  1000000000000003,
+  1000000000000004,
+  1000000000000005
 ]
 ```
 
@@ -78,16 +78,13 @@ Example (obfuscated):
 [
   {
     "code": 200,
-    "id": "**********",
-    "date_created": "2022-**-**T**:**:**.***-**:**",
-    "date_closed": "2022-**-**T**:**:**.***-**:**",
+    "id": 1000000000000001,
+    "date_created": "2022-01-01T12:00:00.000Z",
+    "date_closed": "2022-01-01T12:05:00.000Z",
     "status": "paid",
-    "context": {
-      "channel": "marketplace",
-      "site": "***"
-    }
+    "context": { "channel": "marketplace", "site": "MLX" }
   },
-  { "code": 404, "message": "not_found" }
+  { "code": 404, "message": "order_not_found" }
 ]
 ```
 

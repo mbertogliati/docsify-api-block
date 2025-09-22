@@ -32,17 +32,17 @@
       const example = `
 # Docsify API Block – Demo
 
-Below is an obfuscated example:
+Below is an example using a realistic endpoint (data anonymized only):
 
-<!-- api:start method="POST" path="/redacted/********" expanded="true" -->
+<!-- api:start method="POST" path="/api/v1/orders/bulk/read" expanded="true" -->
 
-> Important: Only up to N items can be read at once.
+> Important: Only up to 100 orders can be read at once.
 
 \`\`\`json
 [
-  "**********",
-  "**********",
-  "**********"
+  1000000000000001,
+  1000000000000002,
+  1000000000000003
 ]
 \`\`\`
 
@@ -50,8 +50,8 @@ Below is an obfuscated example:
 
 \`\`\`json
 [
-  { "code": 200, "id": "**********", "status": "paid" },
-  { "code": 404, "message": "not_found" }
+  { "code": 200, "id": 1000000000000001, "status": "paid" },
+  { "code": 404, "message": "order_not_found" }
 ]
 \`\`\`
 
