@@ -6,8 +6,6 @@ A lightweight Docsify plugin that converts special HTML comments in your Markdow
 - Smooth open/close animations using `<details>`.
 - Works with any Markdown content inside the request/response sections.
 
-> Note: Example endpoint and data below are obfuscated to protect sensitive information.
-
 ## Installation
 
 ### CDN (recommended)
@@ -41,10 +39,10 @@ Then include from `node_modules` or copy to your public assets:
 ```html
 <link rel="stylesheet" href="/path-to-assets/api-block.css" />
 <script src="/path-to-assets/api-block.js"></script>
+```
 
 ## Example
 See a minimal live example in `examples/index.html` (you can host it via GitHub Pages or open locally). It uses the GitHub CDN links above.
-```
 
 ## Usage
 Write specially formatted HTML comments in your Markdown. The plugin will replace them with a rendered API block during Docsify runtime.
@@ -52,12 +50,12 @@ Write specially formatted HTML comments in your Markdown. The plugin will replac
 Supported attributes on `api:start`:
 
 - `method`: HTTP method (e.g., GET, POST, PUT, DELETE, PATCH)
-- `path`: The endpoint path. You can obfuscate or redact this as needed.
+- `path`: The endpoint path.
 - `expanded` or `open`: Set to `"true"` to have the block open by default.
 
-Example (realistic endpoint, data anonymized):
+Example:
 
-```markdown
+````markdown
 <!-- api:start method="POST" path="/api/v1/orders/bulk/read" -->
 
 > Important: Only up to 100 orders can be read at once.
@@ -89,7 +87,7 @@ Example (realistic endpoint, data anonymized):
 ```
 
 <!-- api:end -->
-```
+````
 
 The block above will render like a collapsible card with the method badge and path in the header, and the request and response sections inside.
 
