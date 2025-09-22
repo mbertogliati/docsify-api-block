@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docsify API Block – Example</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mbertogliati/docsify-api-block@v0.1.0/dist/api-block.css" />
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; }
+      .app-name-link { text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      window.$docsify = {
+        name: 'Docsify API Block – Demo',
+        repo: 'mbertogliati/docsify-api-block'
+      };
+    </script>
+
+    <!-- Docsify core -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+
+    <!-- Plugin from GitHub CDN (pinned tag) -->
+    <script src="https://cdn.jsdelivr.net/gh/mbertogliati/docsify-api-block@v0.1.0/dist/api-block.js"></script>
+
+    <!-- Example Markdown content -->
+    <script>
+      // simple docsify init with inline markdown for demo
+      const example = `
+# Docsify API Block – Demo
+
+Below is an obfuscated example:
+
+<!-- api:start method="POST" path="/redacted/********" expanded="true" -->
+
+> Important: Only up to N items can be read at once.
+
+\`\`\`json
+[
+  "**********",
+  "**********",
+  "**********"
+]
+\`\`\`
+
+<!-- api:response -->
+
+\`\`\`json
+[
+  { "code": 200, "id": "**********", "status": "paid" },
+  { "code": 404, "message": "not_found" }
+]
+\`\`\`
+
+<!-- api:end -->
+`;
+      document.addEventListener('DOMContentLoaded', function(){
+        // Docsify reads from index.html or README.md by default. For this demo,
+        // we inject our markdown into the app container.
+        const el = document.querySelector('#app');
+        el.setAttribute('data-app', '');
+        window.$docsify = window.$docsify || {}; 
+        // Use docsify's built-in support for loading markdown from HTML via plugin
+      });
+    </script>
+    <script>
+      // override docsify fetch to return example string
+      const origGet = window.fetch;
+      window.fetch = function(resource, init){
+        if (typeof resource === 'string' && /README\.md$|index\.html$/.test(resource)) {
+          return Promise.resolve(new Response(example, { status: 200 }));
+        }
+        return origGet(resource, init);
+      };
+    </script>
+  </body>
+</html>

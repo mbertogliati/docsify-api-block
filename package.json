@@ -1,0 +1,42 @@
+{
+  "name": "@mbertogliati/docsify-api-block",
+  "version": "0.1.0",
+  "description": "A lightweight Docsify plugin to render API request/response blocks from HTML comments in Markdown.",
+  "main": "dist/api-block.js",
+  "style": "dist/api-block.css",
+  "unpkg": "dist/api-block.js",
+  "jsdelivr": "dist/api-block.js",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "mkdir -p dist && cp src/api-block.js dist/api-block.js && cp src/api-block.css dist/api-block.css",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "docsify",
+    "plugin",
+    "api",
+    "documentation",
+    "markdown"
+  ],
+  "author": "mbertogliati",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbertogliati/docsify-api-block.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mbertogliati/docsify-api-block/issues"
+  },
+  "homepage": "https://github.com/mbertogliati/docsify-api-block#readme",
+  "peerDependencies": {
+    "docsify": ">=4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
