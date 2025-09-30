@@ -22,7 +22,7 @@
     var methodClass = method ? ('method-' + method.toLowerCase()) : '';
     var expanded = (String(attrs.expanded || attrs.open || '').toLowerCase() === 'true');
 
-    return [
+    var html = [
       '<details class="apiblock" data-method="'+ method +'" data-path="'+ path +'"'+ (expanded ? ' open' : '') +'>',
       '  <summary class="apiblock-header">',
       method ? '    <span class="apiblock-method '+ methodClass +'">'+ method +'</span>' : '',
@@ -32,22 +32,43 @@
       '  <div class="apiblock-sections">',
       '    <section class="apiblock-section">',
       '      <div class="apiblock-body">'+ reqHTML +'</div>',
-      '    </section>',
-      '    <section class="apiblock-section">',
-      '      <div class="apiblock-title">Respuesta</div>',
-      '      <div class="apiblock-body">'+ resHTML +'</div>',
-      '    </section>',
+      '    </section>'
+    ];
+
+    // Only add response section if resHTML is provided
+    if (resHTML) {
+      html.push(
+        '    <section class="apiblock-section">',
+        '      <div class="apiblock-title">Respuesta</div>',
+        '      <div class="apiblock-body">'+ resHTML +'</div>',
+        '    </section>'
+      );
+    }
+
+    html.push(
       '  </div>',
       '</details>'
-    ].join('\n');
+    );
+
+    return html.join('\n');
   }
 
   function replaceApiBlocks(html){
-    var re = /<!--\s*api:start([^>]*)-->([\s\S]*?)<!--\s*api:response\s*-->([\s\S]*?)<!--\s*api:end\s*-->/gi;
-    return html.replace(re, function(_, attrStr, req, res){
+    // First, replace blocks WITH response sections
+    var reWithResponse = /<!--\s*api:start([^>]*)-->([\s\S]*?)<!--\s*api:response\s*-->([\s\S]*?)<!--\s*api:end\s*-->/gi;
+    html = html.replace(reWithResponse, function(_, attrStr, req, res){
       var attrs = parseAttrs(attrStr || '');
       return buildHTML(attrs, req.trim(), res.trim());
     });
+
+    // Then, replace blocks WITHOUT response sections
+    var reWithoutResponse = /<!--\s*api:start([^>]*)-->([\s\S]*?)<!--\s*api:end\s*-->/gi;
+    html = html.replace(reWithoutResponse, function(_, attrStr, req){
+      var attrs = parseAttrs(attrStr || '');
+      return buildHTML(attrs, req.trim(), '');
+    });
+
+    return html;
   }
 
   function wireAnimations(root){

@@ -53,7 +53,9 @@ Supported attributes on `api:start`:
 - `path`: The endpoint path.
 - `expanded` or `open`: Set to `"true"` to have the block open by default.
 
-Example:
+**Note:** The `<!-- api:response -->` section is **optional**. You can omit it for API calls that don't have an associated response.
+
+### Example with Request and Response
 
 ````markdown
 <!-- api:start method="POST" path="/api/v1/orders/bulk/read" -->
@@ -89,7 +91,19 @@ Example:
 <!-- api:end -->
 ````
 
-The block above will render like a collapsible card with the method badge and path in the header, and the request and response sections inside.
+### Example without Response
+
+For API calls that don't return a response (e.g., fire-and-forget endpoints), simply omit the `<!-- api:response -->` section:
+
+````markdown
+<!-- api:start method="DELETE" path="/api/v1/cache/clear" -->
+
+Clears the application cache. This operation does not return a response.
+
+<!-- api:end -->
+````
+
+The block above will render like a collapsible card with the method badge and path in the header, and the request section inside.
 
 ## Styling
 This plugin ships with default styles in `api-block.css`. You can override CSS variables to theme it:
