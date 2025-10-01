@@ -54,21 +54,62 @@
   }
 
   function replaceApiBlocks(html){
-    // First, replace blocks WITH response sections
-    var reWithResponse = /<!--\s*api:start([^>]*)-->([\s\S]*?)<!--\s*api:response\s*-->([\s\S]*?)<!--\s*api:end\s*-->/gi;
-    html = html.replace(reWithResponse, function(_, attrStr, req, res){
-      var attrs = parseAttrs(attrStr || '');
-      return buildHTML(attrs, req.trim(), res.trim());
-    });
+    // Iterative parsing to handle consecutive and nested blocks correctly
+    var result = '';
+    var pos = 0;
+    var startRe = /<!--\s*api:start([^>]*)-->/gi;
+    var match;
 
-    // Then, replace blocks WITHOUT response sections
-    var reWithoutResponse = /<!--\s*api:start([^>]*)-->([\s\S]*?)<!--\s*api:end\s*-->/gi;
-    html = html.replace(reWithoutResponse, function(_, attrStr, req){
+    while ((match = startRe.exec(html)) !== null) {
+      var startPos = match.index;
+      var attrStr = match[1];
+      var afterStart = match.index + match[0].length;
+      
+      // Append everything before this block
+      result += html.substring(pos, startPos);
+      
+      // Look for api:response or api:end from afterStart position
+      var responseRe = /<!--\s*api:response\s*-->/gi;
+      responseRe.lastIndex = afterStart;
+      var responseMatch = responseRe.exec(html);
+      
+      var endRe = /<!--\s*api:end\s*-->/gi;
+      endRe.lastIndex = afterStart;
+      var endMatch = endRe.exec(html);
+      
+      if (!endMatch) {
+        // No end tag found, skip this malformed block
+        result += match[0];
+        pos = afterStart;
+        continue;
+      }
+      
+      var reqHTML, resHTML;
+      
+      // Check if response comes before end
+      if (responseMatch && responseMatch.index < endMatch.index) {
+        // Block has response section
+        reqHTML = html.substring(afterStart, responseMatch.index).trim();
+        resHTML = html.substring(responseMatch.index + responseMatch[0].length, endMatch.index).trim();
+      } else {
+        // Block has no response section
+        reqHTML = html.substring(afterStart, endMatch.index).trim();
+        resHTML = '';
+      }
+      
+      // Build and append the HTML
       var attrs = parseAttrs(attrStr || '');
-      return buildHTML(attrs, req.trim(), '');
-    });
-
-    return html;
+      result += buildHTML(attrs, reqHTML, resHTML);
+      
+      // Move position past the end tag
+      pos = endMatch.index + endMatch[0].length;
+      startRe.lastIndex = pos;
+    }
+    
+    // Append remaining content
+    result += html.substring(pos);
+    
+    return result;
   }
 
   function wireAnimations(root){

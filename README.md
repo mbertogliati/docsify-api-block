@@ -55,6 +55,8 @@ Supported attributes on `api:start`:
 
 **Note:** The `<!-- api:response -->` section is **optional**. You can omit it for API calls that don't have an associated response.
 
+**Important:** Nesting API blocks (placing one API block inside another) is **not supported**. Use consecutive blocks instead.
+
 ### Example with Request and Response
 
 ````markdown
