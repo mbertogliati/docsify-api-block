@@ -16,15 +16,15 @@ Add the CSS and JS to your Docsify site (in `index.html`):
 <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
 
 <!-- Load the plugin CSS and JS (replace scope/name with your package) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mbertogliati/docsify-api-block@0.1.2/dist/api-block.css" />
-<script src="https://cdn.jsdelivr.net/npm/@mbertogliati/docsify-api-block@0.1.2/dist/api-block.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mbertogliati/docsify-api-block@0.2.1/dist/api-block.css" />
+<script src="https://cdn.jsdelivr.net/npm/@mbertogliati/docsify-api-block@0.2.1/dist/api-block.js"></script>
 ```
 
 Alternatively, serve directly from this GitHub repo via jsDelivr (pin a tag):
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mbertogliati/docsify-api-block@v0.1.2/dist/api-block.css" />
-<script src="https://cdn.jsdelivr.net/gh/mbertogliati/docsify-api-block@v0.1.2/dist/api-block.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mbertogliati/docsify-api-block@v0.2.1/dist/api-block.css" />
+<script src="https://cdn.jsdelivr.net/gh/mbertogliati/docsify-api-block@v0.2.1/dist/api-block.js"></script>
 ```
 
 ### npm
